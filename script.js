@@ -38,9 +38,71 @@ document.addEventListener("DOMContentLoaded", () => {
         updateHistory();
     });
 
-    // Function to update charts and history
-    const updateCharts = () => { /* Chart updating logic */ };
-    const updateHistory = () => { /* History updating logic */ };
+    // Update charts based on selected interval
+    function updateCharts() {
+        const interval = intervalSelector.value;
+        const filteredData = filterDataByInterval(smokeData, interval);
+        const groupedData = groupDataByDay(filteredData);
 
-    // Other functions as needed, like filterDataByInterval, groupDataByDay, etc.
+        // Prepare data for cigarettes and price
+        const dailyCounts = Object.values(groupedData);
+        const totalCost = dailyCounts.map(count => count * costPerCigarette);
+
+        // Update evolution chart
+        evolutionChart.data.labels = Object.keys(groupedData);
+        evolutionChart.data.datasets[0].data = dailyCounts;
+        evolutionChart.update();
+
+        // Update box plot chart with dual y-axes
+        boxPlotChart.data.labels = Object.keys(groupedData);
+        boxPlotChart.data.datasets[0].data = dailyCounts; // Cigarettes per day
+        boxPlotChart.data.datasets[1].data = totalCost; // Total cost in CHF
+        boxPlotChart.update();
+    }
+
+    // Update history list
+    function updateHistory() {
+        historyList.innerHTML = ''; // Clear current list
+        smokeData.forEach((timestamp, index) => {
+            const listItem = document.createElement('li');
+            const date = new Date(timestamp);
+            listItem.textContent = `${date.toLocaleString()}`;
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', () => {
+                smokeData.splice(index, 1);
+                localStorage.setItem("smokeData", JSON.stringify(smokeData));
+                updateCharts();
+                updateHistory();
+            });
+            listItem.appendChild(deleteBtn);
+            historyList.appendChild(listItem);
+        });
+    }
+
+    // Filter data by interval
+    function filterDataByInterval(data, interval) {
+        const now = new Date();
+        return data.filter(dateStr => {
+            const date = new Date(dateStr);
+            if (interval === 'day') return now - date < 24 * 60 * 60 * 1000;
+            if (interval === 'week') return now - date < 7 * 24 * 60 * 60 * 1000;
+            if (interval === 'month') return now - date < 30 * 24 * 60 * 60 * 1000;
+            return true;
+        });
+    }
+
+    // Group data by day
+    function groupDataByDay(data) {
+        const grouped = {};
+        data.forEach(dateStr => {
+            const date = new Date(dateStr);
+            const day = date.toISOString().split('T')[0];
+            grouped[day] = (grouped[day] || 0) + 1;
+        });
+        return grouped;
+    }
+
+    updateCharts();
+    updateHistory();
 });
