@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fetch JSON data from GitHub repository
     const fetchData = async () => {
         try {
-            const response = await fetch('https://raw.githubusercontent.com/taoufiq-tbt/taoufiq-tbt.github.io/main/data.json');
+            const response = await fetch('https://raw.githubusercontent.com/TaoufiQ-TbT/taoufiq-tbt.github.io/main/data.json');
             if (!response.ok) throw new Error("Could not fetch data.json");
             const jsonData = await response.json();
             localStorage.setItem("smokeData", JSON.stringify(jsonData));
