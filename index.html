@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoking Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="left-panel">
+            <div class="tracker">
+                <span class="emoji">🚬</span>
+                <button id="smokeBtn">Smoke a Cigarette</button>
+            </div>
+            <div class="history">
+                <h2>Smoking History</h2>
+                <ul id="historyList"></ul>
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="chart-section">
+                <h2>Smoking Evolution Chart</h2>
+                <canvas id="evolutionChart"></canvas>
+                <label for="interval">Show data for last:</label>
+                <select id="interval">
+                    <option value="day">Day</option>
+                    <option value="week">Week</option>
+                    <option value="month">Month</option>
+                </select>
+            </div>
+            <div class="chart-section">
+                <h2>Total Cigarettes per Day</h2>
+                <canvas id="boxPlotChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

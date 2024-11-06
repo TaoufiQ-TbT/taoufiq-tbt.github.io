@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    height: 90vh;
+}
+
+.left-panel {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
+    overflow-y: auto;
+}
+
+.tracker {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.emoji {
+    font-size: 50px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.history {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.history h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.history ul {
+    list-style: none;
+    padding: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.history li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.history li button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.right-panel {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+/* Responsive chart container height for wide screens */
+@media (min-width: 1200px) {
+    .right-panel {
+        height: 80vh; /* Takes up 80% of screen height */
+        padding: 20px;
+        justify-content: space-evenly;
+    }
+
+    .chart-section {
+        width: 100%;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    canvas {
+        width: 100% !important;
+        height: 100% !important; /* Responsive height within the container */
+        max-height: calc(50% - 20px); /* Ensures two charts fit in the 80% height */
+    }
+}
+
+/* Smaller Screen (Mobile) Layout */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-panel, .right-panel {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .right-panel {
+        margin-top: 20px;
+    }
+
+    .chart-section {
+        margin-bottom: 20px;
+    }
+
+    canvas {
+        height: 300px !important; /* Adjust canvas height for smaller screens */
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
